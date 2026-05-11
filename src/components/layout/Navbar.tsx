@@ -85,7 +85,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass border-t border-white/8"
+            className="md:hidden bg-[#0a0812] border-t border-white/15 shadow-2xl shadow-black/60"
           >
             <div className="px-4 py-4 space-y-1">
               {siteConfig.nav.map((item) => (
