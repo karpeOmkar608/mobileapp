@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Zap, Calendar } from "lucide-react";
 import { siteConfig } from "@/lib/config";
@@ -55,23 +56,23 @@ export default function FinalCTASection() {
           transition={{ delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
         >
-          <a
-            href="#"
+          <Link
+            href="/register"
             id="final-cta-waitlist"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-violet-600 to-purple-700 text-white font-semibold text-base hover:from-violet-500 hover:to-purple-600 transition-all duration-200 shadow-2xl shadow-violet-900/50 glow-violet hover:scale-[1.02]"
           >
             <Zap className="w-4 h-4 fill-white" />
             {siteConfig.ctaPrimary}
             <ArrowRight className="w-4 h-4" />
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/login"
             id="final-cta-demo"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl glass border border-white/12 text-white font-medium text-base hover:bg-white/8 transition-all duration-200"
           >
             <Calendar className="w-4 h-4 text-white/50" />
             {siteConfig.ctaDemo}
-          </a>
+          </Link>
         </motion.div>
 
         {/* Social proof mini */}

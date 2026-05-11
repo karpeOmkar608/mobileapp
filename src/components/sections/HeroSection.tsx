@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Zap, CheckCircle2, TrendingUp, DollarSign, Users } from "lucide-react";
 import { siteConfig } from "@/lib/config";
@@ -149,15 +150,15 @@ export default function HeroSection() {
           transition={{ delay: 0.5, duration: 0.5 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
         >
-          <a
-            href="#waitlist"
+          <Link
+            href="/register"
             id="hero-cta-waitlist"
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-purple-700 text-white font-semibold text-base hover:from-violet-500 hover:to-purple-600 transition-all duration-200 shadow-2xl shadow-violet-900/50 glow-violet hover:scale-[1.02]"
           >
             <Zap className="w-4 h-4 fill-white" />
             {siteConfig.ctaPrimary}
             <ArrowRight className="w-4 h-4" />
-          </a>
+          </Link>
           <a
             href="#features"
             id="hero-cta-explore"
