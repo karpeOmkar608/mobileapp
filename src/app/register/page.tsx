@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { signIn } from "next-auth/react";
 import { User, Mail, Lock, ArrowRight, Loader2, CheckCircle2 } from "lucide-react";
 import AuthLayout from "@/components/auth/AuthLayout";
 import AuthCard from "@/components/auth/AuthCard";
@@ -85,6 +86,7 @@ export default function RegisterPage() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState({ name: false, email: false, password: false, confirmPassword: false });
   const [termsError, setTermsError] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const set = (field: keyof Omit<FormValues, "terms">) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [field]: e.target.value }));
@@ -101,7 +103,37 @@ export default function RegisterPage() {
     if (!values.terms) { setTermsError(true); return; }
     setTermsError(false);
     if (Object.keys(errs).length === 0) {
-      startTransition(() => { setTimeout(() => router.push("/role-select"), 1200); });
+      setApiError(null);
+      startTransition(async () => {
+        try {
+          const res = await fetch("/api/auth/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: values.name, email: values.email, password: values.password }),
+          });
+
+          const data = await res.json();
+          if (!res.ok) {
+            setApiError(data.message || "Registration failed");
+            return;
+          }
+
+          const signInRes = await signIn("credentials", {
+            email: values.email,
+            password: values.password,
+            redirect: false,
+          });
+
+          if (signInRes?.error) {
+            setApiError("Failed to auto-login after registration");
+          } else {
+            router.push("/role-select");
+            router.refresh();
+          }
+        } catch (error) {
+          setApiError("An unexpected error occurred");
+        }
+      });
     }
   };
 
@@ -126,8 +158,14 @@ export default function RegisterPage() {
           transition={{ delay: 0.16, duration: 0.4 }}
           className="mb-4"
         >
-          <SocialLoginButton id="register-google-btn" icon={<GoogleIcon />} label="Sign up with Google" />
+          <SocialLoginButton id="register-google-btn" icon={<GoogleIcon />} label="Sign up with Google" provider="google" />
         </motion.div>
+
+        {apiError && (
+          <div className="mb-4 p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center">
+            {apiError}
+          </div>
+        )}
 
         {/* Divider */}
         <motion.div

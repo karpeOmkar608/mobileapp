@@ -62,12 +62,12 @@ export default function WhyCreatorOSSection() {
           transition={{ delay: 0.5 }}
           className="mt-14 max-w-3xl mx-auto"
         >
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="glass rounded-2xl p-5 border border-rose-500/15">
               <p className="text-xs font-semibold text-rose-400/70 uppercase tracking-widest mb-4">Before CreatorOS</p>
               {["WhatsApp for deal chats", "Excel for payment tracking", "Email for contracts", "Sticky notes for deadlines", "Zero visibility on analytics"].map((item, i) => (
                 <div key={i} className="flex items-center gap-2 mb-2.5">
-                  <span className="text-rose-500 text-sm">✗</span>
+                  <span className="text-rose-500 text-sm shrink-0">✗</span>
                   <span className="text-sm text-white/35">{item}</span>
                 </div>
               ))}
@@ -76,7 +76,7 @@ export default function WhyCreatorOSSection() {
               <p className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-4">With CreatorOS</p>
               {["Deal CRM — all chats in context", "Payment tracking dashboard", "Digital contracts & e-sign", "Smart deadline reminders", "Full creator analytics"].map((item, i) => (
                 <div key={i} className="flex items-center gap-2 mb-2.5">
-                  <span className="text-emerald-400 text-sm">✓</span>
+                  <span className="text-emerald-400 text-sm shrink-0">✓</span>
                   <span className="text-sm text-white/70">{item}</span>
                 </div>
               ))}

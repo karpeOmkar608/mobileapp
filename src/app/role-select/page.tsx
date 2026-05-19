@@ -3,7 +3,8 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Camera, Briefcase, Users, ArrowRight, Loader2, Zap } from "lucide-react";
+import { Camera, Briefcase, Users, ArrowRight, Loader2, Zap, AlertCircle } from "lucide-react";
+import { useSession } from "next-auth/react";
 import GradientBackground from "@/components/auth/GradientBackground";
 import RoleCard from "@/components/auth/RoleCard";
 
@@ -47,14 +48,36 @@ const roles = [
 
 export default function RoleSelectPage() {
   const router = useRouter();
+  const { update } = useSession();
   const [selectedRole, setSelectedRole] = useState<Role>(null);
   const [isPending, startTransition] = useTransition();
+  const [apiError, setApiError] = useState<string | null>(null);
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (!selectedRole) return;
-    startTransition(() => {
-      // Simulate — no backend
-      setTimeout(() => router.push("/"), 1000);
+    setApiError(null);
+    startTransition(async () => {
+      try {
+        const res = await fetch("/api/user/role", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ role: selectedRole.toUpperCase() }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          setApiError(data.message || "Failed to set role. Please try again.");
+          return;
+        }
+
+        // Force-refresh the JWT so middleware sees the new role immediately
+        await update({ role: selectedRole.toUpperCase() });
+        router.push(`/onboarding/${selectedRole}`);
+        router.refresh();
+      } catch (error) {
+        console.error("Error setting role:", error);
+        setApiError("Network error. Please check your connection and try again.");
+      }
     });
   };
 
@@ -179,6 +202,20 @@ export default function RoleSelectPage() {
                 >
                   Click on a card above to select your role
                 </motion.p>
+              )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+              {apiError && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm"
+                >
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  {apiError}
+                </motion.div>
               )}
             </AnimatePresence>
           </motion.div>

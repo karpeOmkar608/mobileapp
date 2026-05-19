@@ -4,6 +4,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import SocialProofSection from "@/components/sections/SocialProofSection";
 import ProblemSection from "@/components/sections/ProblemSection";
 import FeaturesSection from "@/components/sections/FeaturesSection";
+import MarketplaceSection from "@/components/sections/MarketplaceSection";
 import EcosystemSection from "@/components/sections/EcosystemSection";
 import DashboardPreviewSection from "@/components/sections/DashboardPreviewSection";
 import WhyCreatorOSSection from "@/components/sections/WhyCreatorOSSection";
@@ -19,6 +20,7 @@ export default function Home() {
       <SocialProofSection />
       <ProblemSection />
       <FeaturesSection />
+      <MarketplaceSection />
       <EcosystemSection />
       <DashboardPreviewSection />
       <WhyCreatorOSSection />

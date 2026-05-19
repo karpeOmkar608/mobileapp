@@ -118,8 +118,8 @@ export default function ProblemSection() {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <div className="inline-flex items-center gap-3 glass px-6 py-4 rounded-2xl border border-violet-500/20">
-            <span className="text-2xl">⚡</span>
+          <div className="inline-flex items-center gap-3 glass px-5 sm:px-6 py-4 rounded-2xl border border-violet-500/20 max-w-full">
+            <span className="text-2xl shrink-0">⚡</span>
             <p className="text-white/70">
               <span className="text-white font-semibold">CreatorOS</span> was built to solve all of this.
             </p>

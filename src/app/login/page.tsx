@@ -2,8 +2,9 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
+import { signIn } from "next-auth/react";
 import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 import AuthLayout from "@/components/auth/AuthLayout";
 import AuthCard from "@/components/auth/AuthCard";
@@ -43,16 +44,28 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState({ email: false, password: false });
+  const searchParams = useSearchParams();
+  const errorParam = searchParams.get("error");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs = validateLogin(email, password);
     setErrors(errs);
     setTouched({ email: true, password: true });
     if (Object.keys(errs).length === 0) {
-      startTransition(() => {
-        // Simulate — no backend
-        setTimeout(() => router.push("/role-select"), 1200);
+      startTransition(async () => {
+        const res = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (res?.error) {
+          setErrors({ email: "Invalid email or password" });
+        } else {
+          router.push("/dashboard"); // Middleware will handle exact redirect
+          router.refresh();
+        }
       });
     }
   };
@@ -78,7 +91,7 @@ export default function LoginPage() {
           <p className="text-sm text-white/45">Sign in to your CreatorOS account</p>
         </motion.div>
 
-        {/* Google */}
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -89,8 +102,15 @@ export default function LoginPage() {
             id="login-google-btn"
             icon={<GoogleIcon />}
             label="Continue with Google"
+            provider="google"
           />
         </motion.div>
+
+        {errorParam && (
+          <div className="mb-4 p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center">
+            Authentication failed. Please try again.
+          </div>
+        )}
 
         {/* Divider */}
         <motion.div

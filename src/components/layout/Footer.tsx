@@ -2,9 +2,9 @@ import { Zap } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 
 const footerLinks = {
-  Product: ["Features", "Ecosystem", "Pricing", "Changelog", "Roadmap"],
-  Company: ["About", "Blog", "Careers", "Press", "Contact"],
-  Creators: ["How it Works", "Deal Templates", "Resources", "Community"],
+  Product: ["Features", "Marketplace", "Pricing", "Changelog", "Roadmap"],
+  Resources: ["Blog", "Help Center", "API Docs", "Community", "Status"],
+  Company: ["About", "Careers", "Press", "Contact", "Partners"],
   Legal: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
 };
 
@@ -40,10 +40,10 @@ const SocialIcons = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/8 bg-[#07070d]">
+    <footer className="border-t border-white/8 bg-[#07070d]" id="footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Top */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-10 mb-14">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 lg:gap-10 mb-14">
           {/* Brand */}
           <div className="col-span-2">
             <a href="#" className="flex items-center gap-2.5 mb-4">
@@ -52,11 +52,23 @@ export default function Footer() {
               </div>
               <span className="text-lg font-bold text-white">{siteConfig.name}</span>
             </a>
-            <p className="text-sm text-white/50 leading-relaxed max-w-xs">
-              The operating system for the creator economy. Built for creators, brands, and agencies.
+            <p className="text-sm text-white/50 leading-relaxed max-w-xs mb-4">
+              The operating system for the creator economy. Built for creators, brands, and agencies who are serious about scale.
             </p>
+            {/* Role-specific links */}
+            <div className="flex flex-col gap-1.5 mb-6">
+              {[
+                { label: "Join as Creator →", href: "/register?role=creator", color: "text-violet-400 hover:text-violet-300" },
+                { label: "Join as Brand →", href: "/register?role=brand", color: "text-rose-400 hover:text-rose-300" },
+                { label: "Join as Agency →", href: "/register?role=agency", color: "text-amber-400 hover:text-amber-300" },
+              ].map((link) => (
+                <a key={link.href} href={link.href} className={`text-xs font-medium transition-colors ${link.color}`}>
+                  {link.label}
+                </a>
+              ))}
+            </div>
             {/* Social */}
-            <div className="flex items-center gap-3 mt-6">
+            <div className="flex items-center gap-3">
               {SocialIcons.map(({ label, href, svg }) => (
                 <a
                   key={label}
@@ -97,10 +109,13 @@ export default function Footer() {
           <p className="text-xs text-white/30">
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
-          <div className="flex items-center gap-1 text-xs text-white/30">
-            <span>Made with</span>
-            <span className="text-rose-500">♥</span>
-            <span>for the creator economy</span>
+          <div className="flex items-center gap-4 text-xs text-white/25">
+            <a href="#" className="hover:text-white/50 transition-colors">Privacy</a>
+            <a href="#" className="hover:text-white/50 transition-colors">Terms</a>
+            <a href="#" className="hover:text-white/50 transition-colors">Cookies</a>
+            <span className="flex items-center gap-1">
+              Made with <span className="text-rose-500">♥</span> for the creator economy
+            </span>
           </div>
         </div>
       </div>

@@ -62,9 +62,9 @@ export default function EcosystemSection() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative mx-auto max-w-3xl"
+          className="relative mx-auto max-w-3xl w-full"
         >
-          <div className="glass rounded-3xl border border-white/8 p-4 sm:p-8 shadow-2xl shadow-black/40">
+          <div className="glass rounded-3xl border border-white/8 p-4 sm:p-8 shadow-2xl shadow-black/40 overflow-hidden">
             <svg viewBox="0 0 100 100" className="w-full" style={{ aspectRatio: "1/0.85" }}>
               {/* Connection lines */}
               {connections.map((conn, i) => {

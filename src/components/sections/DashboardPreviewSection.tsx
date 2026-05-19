@@ -50,8 +50,8 @@ export default function DashboardPreviewSection() {
 
           <div className="relative glass-strong rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-black/50">
             {/* Top bar */}
-            <div className="flex items-center justify-between px-5 py-3 border-b border-white/8 bg-white/2">
-              <div className="flex items-center gap-4">
+            <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-white/8 bg-white/2">
+              <div className="flex items-center gap-3 sm:gap-4">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-rose-500/60" />
                   <div className="w-3 h-3 rounded-full bg-amber-500/60" />
@@ -106,8 +106,8 @@ export default function DashboardPreviewSection() {
                   ].map((s, i) => (
                     <div key={i} className="rounded-xl bg-white/4 border border-white/6 p-3">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs text-white/40">{s.label}</span>
-                        <span className="text-sm">{s.icon}</span>
+                        <span className="text-xs text-white/40 truncate mr-1">{s.label}</span>
+                        <span className="text-sm shrink-0">{s.icon}</span>
                       </div>
                       <p className="text-lg font-bold text-white">{s.value}</p>
                       <p className={`text-xs mt-0.5 ${s.pos === true ? "text-emerald-400" : s.pos === false ? "text-rose-400" : "text-white/30"}`}>
