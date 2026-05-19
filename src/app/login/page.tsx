@@ -37,7 +37,9 @@ function validateLogin(email: string, password: string): FormErrors {
   return errors;
 }
 
-export default function LoginPage() {
+import { Suspense } from "react";
+
+function LoginForm() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [email, setEmail] = useState("");
@@ -213,5 +215,17 @@ export default function LoginPage() {
         </motion.p>
       </AuthCard>
     </AuthLayout>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <Loader2 className="w-8 h-8 animate-spin text-violet-500" />
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }

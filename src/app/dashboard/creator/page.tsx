@@ -73,7 +73,7 @@ export default async function CreatorDashboard() {
             </p>
             {niches.length > 0 && (
               <div className="flex gap-2 mt-3">
-                {niches.map(n => (
+                {niches.map((n: string) => (
                   <span key={n} className="px-2 py-0.5 bg-white/5 rounded text-xs text-white/60 border border-white/10">{n}</span>
                 ))}
               </div>
